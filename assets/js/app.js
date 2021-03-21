@@ -1,4 +1,8 @@
-var steamID             = getQueryVariable('steamid');
+const params = location.search.slice(1).split('&').reduce((acc, s) => {
+  const [k, v] = s.split('=')
+  return Object.assign(acc, {[k]: v})
+}, {});
+var steamID             = params.steamid
 var steamAPIURL         = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + gmodLS.steamWebApiKey + '&steamids=' + steamID;
 var crossOriginProvider = 'https://ignorecors-yipksgwdit.now.sh/?url=' + encodeURIComponent(steamAPIURL);
 
@@ -6,7 +10,7 @@ var crossOriginProvider = 'https://ignorecors-yipksgwdit.now.sh/?url=' + encodeU
  * init everything
  */
 document.body.style.backgroundImage = 'url(' + gmodLS.backgroundImg + ')';
-dqs('[data-mapname]').innerText     = getQueryVariable('mapname');
+dqs('[data-mapname]').innerText     = params.mapname;
 
 /* call SteamWebapi for personaname & avatar */
 (function callSteamWebApi() {
@@ -27,20 +31,11 @@ gmodLS.rules.forEach(function(rule, index) {
     dqs('[data-rules]').appendChild(liNode)
 });
 
-/* play music */
-if (gmodLS.musicFiles.length > 0) {
-    var randomMusic = Math.floor(Math.random() * gmodLS.musicFiles.length);
-    var musicSource = document.createElement('source');
-    musicSource.setAttribute('src', 'assets/' + gmodLS.musicFiles[randomMusic]);
-    dqs('audio').volume = gmodLS.musicVolume;
-    dqs('audio').appendChild(musicSource);
-}
-
 /* file loading progress percentage */
 function updatePercentage(needed) {
     var totalFiles = parseInt(dqs('[data-files-total]').innerText);
     var percentage = isNaN(totalFiles) ? 'N/A' : (totalFiles - needed) / totalFiles * 100;
-    
+
     dqs('[data-percentage]').innerText = Math.round(percentage);
     dqs('.progress').style.width       = percentage + '%';
     if (percentage == 100) {

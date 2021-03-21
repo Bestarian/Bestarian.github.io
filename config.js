@@ -15,23 +15,6 @@ gmodLS.steamWebApiKey = '853E83344C65E1F775EB7581702AC10A';
 gmodLS.backgroundImg  = 'https://files.facepunch.com/s/f3f82956055e.jpg';
 
 /**
- * If you want music played in background add your music files here.
- * The music files must be in OGG format to be played correctly.
- * @type {Array}
- */
-gmodLS.musicFiles = [
-];
-
-/**
- * Music volume (Float value, max=1)
- * 0   = off/no music
- * 0.5 = 50% volume
- * 1   = full volume
- * @type {Number}
- */
-gmodLS.musicVolume = 0;
-
-/**
  * Serverrules - One rule per row
  * @type {Array}
  */
